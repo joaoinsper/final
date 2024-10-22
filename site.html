@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaflet - Mapa do Brasil</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+        }
+
+        #map {
+            height: 100vh;
+            width: 60vw;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            background-color: #f0f0f0;
+        }
+
+        /* Adicionar uma área à direita para informações adicionais */
+        #info {
+            width: 40vw;
+            height: 100vh;
+            background-color: #f9f9f9;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="map"></div>
+    <div id="info">
+        <h1>Informações</h1>
+        <p>Este é o espaço para inserir dados adicionais ao lado do mapa.</p>
+    </div>
+
+    <script>
+        console.log("Iniciando o mapa...");
+        // Inicializa o mapa focado no Brasil
+        var map = L.map('map', {
+            zoomSnap: 0.1,
+            zoom: 4.55,
+            center: [-15.7801, -52.9292]
+        });
+
+        // Variável global para os municípios
+        var municipiosLayer;
+
+        // Função para definir a cor com base no valor de 'aplicou_prova'
+        function getColor(aplicouProva) {
+            return aplicouProva === "Sim" ? '#009e1a' : '#cfcfcf'; // Verde para "Sim", cinza para "Não"
+        }
+
+        // Função de estilo para os municípios
+        function styleMunicipios(feature) {
+            return {
+                fillColor: getColor(feature.properties.aplicou_prova),
+                weight: 0.6,
+                opacity: 1,
+                color: '#4f4f4f',
+                fillOpacity: 1
+            };
+        }
+
+        // Função para adicionar tooltip com o nome do município (NM_MUN)
+        function onEachFeature(feature, layer) {
+            if (feature.properties && feature.properties.NM_MUN) {
+                layer.bindTooltip(feature.properties.NM_MUN, {
+                    permanent: false,
+                    direction: "top"
+                });
+            }
+
+            layer.on({
+                mouseover: function (e) {
+                    var layer = e.target;
+                    layer.setStyle({
+                        weight: 1, // Aumenta a espessura da borda
+                        color: 'black', // Altera a cor da borda
+                        fillOpacity: 0.5 // Aumenta a opacidade do preenchimento
+                    });
+                    layer.bringToFront(); // Traz o município para frente
+                },
+                mouseout: function (e) {
+                    municipiosLayer.resetStyle(e.target); // Restaura o estilo original
+                }
+            });
+        }
+
+        // Carrega ambos os GeoJSON simultaneamente
+        Promise.all([
+            fetch('brasil.geojson').then(response => response.json()),
+            fetch('estados.json').then(response => response.json())
+        ])
+            .then(([municipiosData, estadosData]) => {
+                console.log("Dados dos municípios e estados carregados.");
+
+                // Adiciona os municípios ao mapa
+                municipiosLayer = L.geoJSON(municipiosData, {
+                    style: styleMunicipios,
+                    onEachFeature: onEachFeature // Adiciona os tooltips e eventos para os municípios
+                }).addTo(map);
+
+                // Adiciona os limites dos estados ao mapa
+                var estadosLayer = L.geoJSON(estadosData, {
+                    style: {
+                        color: 'black',
+                        weight: 2, // Bordas mais grossas para os estados
+                        fillOpacity: 0 // Sem preenchimento para destacar só as bordas
+                    },
+                    interactive: false // Os estados não devem ser interativos
+                }).addTo(map);
+
+                // Adiciona um evento de clique na camada dos estados
+                estadosLayer.on('click', function (e) {
+                    map.fitBounds(e.target.getBounds()); // Ajusta o zoom para o estado clicado
+                });
+
+                // Ajusta o mapa para os limites do Brasil
+                map.fitBounds(municipiosLayer.getBounds());
+
+            })
+            .catch(error => console.error('Erro ao carregar os GeoJSON:', error));
+    </script>
+
+</body>
+
+</html>
