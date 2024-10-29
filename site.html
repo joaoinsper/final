@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swiper com Leaflet - Mapa do Brasil</title>
+    <link rel="stylesheet" href="https://unpkg.com/swiper@latest/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+    <script src="https://unpkg.com/swiper@latest/swiper-bundle.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        .swiper-container {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            /* Adicionado para evitar o tremor */
+        }
+
+        .swiper-slide {
+            display: flex;
+            height: 100vh;
+            /* Adicionando altura fixa para o slide */
+        }
+
+        #map,
+        #map2,
+        #map3
+        {
+            height: 100vh;
+            width: 60vw;
+            /* O mapa ocupará 60% da largura da tela */
+        }
+
+        #map4
+        {
+            height: 100%;
+            width: 45%;
+        }
+
+        /* Estilos adicionais para o conteúdo do slide */
+        #info {
+            width: 40vw;
+            /* O texto ocupará 40% da largura da tela */
+            height: 100vh;
+            /* Altura fixa para evitar tremor */
+            background-color: #f9f9f9;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <!-- Slide 1 com o mapa -->
+            <div class="swiper-slide">
+                <div id="map"></div>
+                <div id="info">
+                    <h1>Mapa do Brasil</h1>
+                    <p>Este é o mapa do Brasil com informações sobre municípios.</p>
+                </div>
+            </div>
+
+            <!-- Slide 2 com informações genéricas -->
+            <div class="swiper-slide">
+                <div id="map2"></div>
+                <div id="info">
+                    <h1>Slide 2</h1>
+                    <p>Este é o segundo slide. Você pode adicionar informações relevantes aqui.</p>
+                </div>
+            </div>
+
+            <!-- Slide 3 com informações do gráfico -->
+            <div class="swiper-slide">
+                <div id="map3" class="flourish-embed flourish-chart" data-src="visualisation/20017364">
+                    <script src="https://public.flourish.studio/resources/embed.js"></script>
+                    <noscript><img src="https://public.flourish.studio/visualisation/20017364/thumbnail" width="100%"
+                            alt="chart visualization" /></noscript>
+                </div>
+                <div id="info">
+                    <h1>Slide 3</h1>
+                    <p>Este é o terceiro slide. Adicione mais conteúdo conforme necessário.</p>
+                </div>
+            </div>
+
+            <!-- Slide 4 com informações do gráfico -->
+             <div class="swiper-slide">
+                <div id="map4" class="flourish-embed flourish-map" data-src="visualisation/20017720">
+                    <script src="https://public.flourish.studio/resources/embed.js"></script>
+                    <noscript><img src="https://public.flourish.studio/visualisation/20017720/thumbnail"
+                            alt="map visualization"/></noscript>
+                </div>
+                <div id="info">
+                    <h1>Slide 4</h1>
+                    <p>Este é o quarto slide.</p>
+                </div>
+                
+             </div>
+
+        </div>
+
+        <!-- Navegação -->
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-pagination"></div>
+    </div>
+
+    <script>
+        console.log("Iniciando o mapa...");
+        // Inicializa o mapa focado no Brasil
+        var map = L.map('map', {
+            zoomSnap: 0.1,
+            zoom: 4.55,
+            center: [-15.7801, -52.9292]
+        });
+
+        var map2 = L.map('map2', {
+            zoomSnap: 0.1,
+            zoom: 6.4, // Zoom diferente para o segundo slide
+            center: [-6.473, -40.964]
+        });
+
+        // Variáveis globais para os municípios
+        var municipiosLayer;
+        var municipiosLayer2;
+
+        // Função para definir a cor com base no valor de 'aplicou_prova'
+        function getColor(aplicouProva) {
+            return aplicouProva === "Sim" ? '#009e1a' : '#cfcfcf'; // Verde para "Sim", cinza para "Não"
+        }
+
+        // Função de estilo para os municípios
+        function styleMunicipios(feature) {
+            return {
+                fillColor: getColor(feature.properties.aplicou_prova),
+                weight: 0.6,
+                opacity: 1,
+                color: '#4f4f4f',
+                fillOpacity: 1
+            };
+        }
+
+        // Função para adicionar tooltip com o nome do município (NM_MUN)
+        function onEachFeature(feature, layer) {
+            if (feature.properties && feature.properties.NM_MUN) {
+                layer.bindTooltip(feature.properties.NM_MUN, {
+                    permanent: false,
+                    direction: "top"
+                });
+            }
+
+            layer.on({
+                mouseover: function (e) {
+                    var layer = e.target;
+                    layer.setStyle({
+                        weight: 1, // Aumenta a espessura da borda
+                        color: 'black', // Altera a cor da borda
+                        fillOpacity: 0.5 // Aumenta a opacidade do preenchimento
+                    });
+                },
+                mouseout: function (e) {
+                    municipiosLayer.resetStyle(e.target); // Restaura o estilo original no mapa 1
+                    municipiosLayer2.resetStyle(e.target); // Restaura o estilo original no mapa 2
+                }
+            });
+        }
+
+        // Carrega ambos os GeoJSON simultaneamente
+        Promise.all([
+            fetch('brasil.geojson').then(response => response.json()),
+            fetch('estados.json').then(response => response.json())
+        ])
+            .then(([municipiosData, estadosData]) => {
+
+
+                // Adiciona os municípios ao mapa 1
+                municipiosLayer = L.geoJSON(municipiosData, {
+                    style: styleMunicipios,
+                    onEachFeature: onEachFeature // Adiciona os tooltips e eventos para os municípios
+                }).addTo(map);
+
+                // Adiciona os limites dos estados ao mapa 1
+                var estadosLayer = L.geoJSON(estadosData, {
+                    style: {
+                        color: 'black',
+                        weight: 2, // Bordas mais grossas para os estados
+                        fillOpacity: 0 // Sem preenchimento para destacar só as bordas
+                    },
+                    interactive: false // Os estados não devem ser interativos
+                }).addTo(map);
+
+                // Ajusta o mapa 1 para os limites do Brasil
+                map.fitBounds(municipiosLayer.getBounds());
+
+                // Adiciona os municípios ao mapa 2
+                municipiosLayer2 = L.geoJSON(municipiosData, {
+                    style: styleMunicipios,
+                    onEachFeature: onEachFeature
+                }).addTo(map2);
+
+                // Adiciona os limites dos estados ao mapa 2
+                var estadosLayer2 = L.geoJSON(estadosData, {
+                    style: function (feature) {
+                        // Condição para manter o estilo normal para CE e PI
+                        if (feature.properties.SIGLA_UF === "CE" || feature.properties.SIGLA_UF === "PI") {
+                            return {
+                                color: 'black',
+                                weight: 2,
+                                interactive: false, // Interativo apenas para CE e PI
+                                fillOpacity: 0
+                            };
+                        } else {
+                            return {
+                                color: 'gray', // Outros estados em cinza
+                                weight: 1,
+                                fillOpacity: 1,
+                                interactive: true // Interativo para os outros estados
+                            };
+                        }
+                    },
+                }).addTo(map2);
+
+
+            });
+
+
+
+        // Inicializa o Swiper
+        var swiper = new Swiper('.swiper-container', {
+            loop: true,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+        });
+    </script>
+
+</body>
+
+</html>
