@@ -1,0 +1,219 @@
+/* Estilos para dispositivos móveis */
+@media (max-width: 768px) {
+    body {
+        flex-direction: column;
+        overflow: auto;
+    }
+
+    swiper-container {
+        width: 100vw;
+        height: 100vh; /* Reduz altura para caber no celular */
+    }
+
+    .capa-title {
+        font-size: 2rem; /* Reduz tamanho da fonte no título */
+    }
+
+    .capa-subtitle {
+        font-size: 1.2rem; /* Reduz subtítulo */
+    }
+
+    .capa-button {
+        font-size: 0.9rem;
+        padding: 8px 16px;
+    }
+}
+
+
+:root {
+    --swiper-navigation-sides-offset: 10px; /* Próximo à borda direita/esquerda */
+    --swiper-navigation-top-offset: calc(100% - 50px); /* Próximo ao rodapé */
+    --swiper-navigation-color: #ff0000; /* Cor das setas */
+    --swiper-navigation-size: 5px; /* Tamanho das setas */
+}
+
+:host {
+    --swiper-navigation-size: 5px; /* Tamanho das setas */
+}
+
+
+.capa {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #2c3e50, #4ca1af);
+    color: #fff;
+    text-align: center;
+    z-index: 9999;
+    opacity: 1;
+    transition: opacity 1s ease, visibility 1s ease;
+    visibility: visible;
+}
+
+.capa.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.capa-content {
+    max-width: 600px;
+}
+
+.capa-title {
+    font-size: 3rem;
+    margin: 0;
+    white-space: nowrap;
+    font-family: 'Georgia', serif;
+}
+
+.capa-subtitle {
+    font-size: 1.5rem;
+    margin: 20px 0;
+    white-space: nowrap;
+    font-family: 'Georgia', serif;
+}
+
+.capa-button {
+    font-size: 1rem;
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.capa-button:hover {
+    background-color: #0056b3;
+}
+
+
+body {
+    display: flex;
+    margin: 0;
+    overflow: hidden;
+}
+
+swiper-container {
+    width: 50vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+swiper-slide {
+    box-sizing: border-box;
+    padding: 20px;
+    overflow-y: auto;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: justify;
+}
+
+h2,
+h3 {
+    margin-top: 0;
+    font-family: 'Georgia', serif;
+    font-weight: bold;
+    color: #333;
+}
+
+h1 {
+    font-size: 32px;
+    margin-top: 0;
+    margin-bottom: 40px;
+    font-family: 'Georgia', serif;
+    font-weight: bold;
+    color: #333;
+}
+
+p {
+    font-size: 16px;
+    color: #444;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+table th,
+table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
+#map, #joao {
+    height: 100vh;
+    width: 50vw;
+    transition: opacity 0.5s;
+    background-color: white;
+}
+
+#joao {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+#joao img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ajusta a imagem para cobrir o contêiner */
+    display: block;
+}
+
+#chart-barra {
+    display: block;
+    height: 100vh;
+    width: 50vw;
+    background-color: red;
+    z-index: 1000;
+}
+
+form {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    z-index: 1000;
+}
+
+.state-label {
+    font-size: 8px;
+    font-weight: bold;
+    color: black;
+    background-color: transparent;
+    text-shadow: 1px 1px 2px white;
+    background: none !important;
+    border: none !important;
+    padding: 0;
+    box-shadow: none !important;
+}
+
+.leaflet-interactive {
+    outline: none;
+}

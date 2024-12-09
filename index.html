@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplicação de provas do ENEM nos municípios brasileiros</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css">
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js" defer></script>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" defer></script>
+    <script src="https://d3js.org/d3.v7.min.js" defer></script>
+    <script src="https://unpkg.com/leaflet.label@1.0.6/dist/leaflet.label.js" defer></script>
+    <script src="https://public.flourish.studio/resources/embed.js"></script>
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+
+    <div class="capa" id="capa">
+        <div class="capa-content">
+            <h1 class="capa-title">Explorando o ENEM 2023</h1>
+            <h2 class="capa-subtitle">Em quais municípios brasileiros o ENEM foi aplicado?</h2>
+            <button class="capa-button" id="capa-button">Iniciar</button>
+        </div>
+    </div>
+
+    <div id="map-container" style="visibility: hidden;">
+        <div id="map"></div>
+        <div id="joao">
+            <img src="IMG_3757.JPG" alt="Foto de João Barbosa">
+        </div>
+    </div>
+
+    <swiper-container navigation>
+        <swiper-slide data-tela="brasil">
+            <h1>Apenas 33% dos municípios brasileiros aplicaram o Enem 2023</h1>
+            <p>O Exame Nacional do Ensino Médio (Enem) 2023 foi aplicado em apenas 33% dos municípios brasileiros,
+                de
+                acordo com dados divulgados pelo Ministério da Educação. Dos 5.572 municípios do país, apenas 1.885
+                realizaram as provas, enquanto 3.687 cidades não tiveram aplicação do exame.</p>
+            <p>Apesar de o número de inscritos no Enem ter alcançado 3.933.955 participantes em 2023, a concentração
+                das provas em um terço das cidades brasileiras reflete os desafios logísticos e a distribuição
+                desigual
+                de infraestrutura para atender a todos os candidatos. Esse cenário impacta, sobretudo, os estudantes
+                de
+                áreas mais remotas, que precisam se deslocar para municípios vizinhos para participar do exame,
+                gerando
+                custos adicionais e barreiras de acesso.</p>
+            <p>No mapa interativo disponível ao lado esquerdo, é possível explorar a distribuição dos municípios que
+                participaram ou não do exame. As cidades que aplicaram a prova estão destacadas em verde, enquanto
+                aquelas que não participaram estão marcadas em cinza. A ferramenta permite uma visualização
+                abrangente
+                da cobertura territorial do Enem 2023 e oferece um panorama claro das desigualdades regionais na
+                realização da avaliação.</p>
+        </swiper-slide>
+
+        <swiper-slide data-tela="nordeste">
+            <h1>Vizinhos, Ceará e Piauí apresentam discrepância na aplicação do ENEM
+            </h1>
+            <p>Ao aproximar o olhar sobre a região Nordeste, destaca-se uma diferença significativa entre os estados
+                vizinhos Ceará e Piauí na aplicação do Enem 2023 e no desempenho médio dos estudantes.</p>
+            <p>O Ceará, com 184 municípios, aplicou a prova em 65% deles (120 cidades). Em contraste, o Piauí, que
+                conta
+                com 224 municípios, teve a aplicação do exame em apenas 15% (34 cidades). Essa diferença já
+                evidencia um
+                maior alcance da prova no Ceará, mas as discrepâncias não param por aí.</p>
+            <p>Ao analisar as médias de notas nos dois estados, o Ceará supera o Piauí em todas as áreas avaliadas:
+            </p>
+            <br>
+            <table class="tabela-notas">
+                <thead>
+                    <tr>
+                        <th>Estado</th>
+                        <th>Redação</th>
+                        <th>Ciências Humanas</th>
+                        <th>Linguagens e Códigos</th>
+                        <th>Matemática</th>
+                        <th>Ciências da Natureza</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CE</td>
+                        <td>456.0</td>
+                        <td>380.3</td>
+                        <td>378.6</td>
+                        <td>377.9</td>
+                        <td>348.7</td>
+                    </tr>
+                    <tr>
+                        <td>PI</td>
+                        <td>449.0</td>
+                        <td>366.8</td>
+                        <td>364.8</td>
+                        <td>358.3</td>
+                        <td>339.6</td>
+                    </tr>
+                </tbody>
+            </table><br>
+            <p>É possível listar alguns motivos que podem fazer com que essa discrepância seja considerável tanto
+                nas
+                notas
+                quanto na quantidade de municípios disponíveis para aplicação de prova:</p><br>
+            <h3>Políticas educacionais consistentes no Ceará</h3>
+            <p>O estado do Ceará é frequentemente reconhecido como referência em educação pública no Brasil, devido
+                à
+                implementação de políticas inovadoras como o <a href="https://www.seduc.ce.gov.br/mais-paic/"
+                    target="_blank"> Programa Alfabetização na Idade Certa (PAIC)</a> e programas de incentivo como
+                escolas em tempo integral.</p>
+
+            <h3>Infraestrutura e logística para aplicação do exame</h3>
+            <p>O maior percentual de municípios do Ceará que aplicaram o ENEM indica que o estado fez um
+                investimento
+                maior
+                em infraestrutura e logística para os participantes da prova, reduzindo a necessidade de
+                deslocamentos
+                maiores,
+                como acontece com alunos do estado do Piauí.</p>
+
+            <h3>Disparidades socioeconômicas regionais</h3>
+            <p>O Piauí, com <a
+                    href="https://g1.globo.com/pi/piaui/noticia/2023/12/10/populacao-pobre-no-piaui-diminui-gracas-a-beneficios-de-programas-sociais-diz-ibge.ghtml"
+                    target="_blank">
+                    indicadores de pobreza mais elevados</a>, enfrenta maiores desafios para investir em
+                infraestrutura
+                educacional e logística, dificultando tanto a aplicação do exame quanto a preparação dos estudantes.
+            </p>
+        </swiper-slide>
+
+        <swiper-slide data-tela="barras">
+            <h1>Como fica a porcentagem de aplicação de prova em todos os estados brasileiros?</h1>
+            <p>Os dados do Enem 2023 revelam uma distribuição desigual na aplicação da prova entre os estados
+                brasileiros.
+                Enquanto alguns estados apresentam uma cobertura ampla, com mais de 70% dos municípios realizando o
+                exame,
+                outros têm uma participação muito menor, com menos de 20% das cidades aplicando a prova.</p>
+            <p>Estados da região Norte lideraram em termos percentuais, com destaque para o Amazonas, que aplicou a
+                prova em 93,55% de seus municípios, e o Acre, com 77,27%. Entretanto, estados como o Piauí (15,1%),
+                Minas
+                Gerais (22,9%) e Rio Grande do Sul (23,2%) apresentaram índices consideravelmente baixos de
+                aplicação.</p>
+            <p>Apesar de liderarem esse recorte, uma contradição chjama a atenção nos estados do Amazonas e Acre:
+                ambos
+                foram as unidades federativas que registraram as maiores taxas de abstenção de candidatos, como
+                veremos
+                na tela seguinte.</p>
+
+            </div>
+        </swiper-slide>
+
+        <swiper-slide data-tela="comparecimento">
+            <h1>Estados do Norte lideram a taxa de abstenção entre os inscritos no ENEM 2023</h1>
+            <p>Como já noticiado anteriormente em minha reportagem em parceria com o jornalista Guilherme Queiroz,
+                <a href="https://enem23.onrender.com/" target="_blank">os estados da região Norte aparecem como as
+                    unidades da federação com a maior porcentagem de estudantes que se inscreveram no exame e não
+                    completaram a prova, com exceção do Pará. Amazonas, Acre, Roraima, Amapá e Rondônia aparecem no
+                    topo, como os estados com maior taxa de abstenção.</a>
+            </p>
+            <p>Ou seja, apesar da prova ser disponibilizada em quase todos os municípios amazonenses, fatores como
+                dificuldade de transporte, condições socioeconômicas e até mesmo a distância entre a residência do
+                candidato para a aplicação de prova podem ter feito com que o Amazonas liderasse negativamente esse
+                recorte.
+            </p>
+        </swiper-slide>
+
+        <swiper-slide data-tela="joao">
+            <h1 style="text-align: center;">João Barbosa</h1>
+            <p> Jornalista e atualmente Analista de comunicação no Insper, onde é responsável pelo planejamento,
+                produção e divulgação de conteúdos institucionais e acadêmicos. Além disso, cursa a pós-graduação
+                em Jornalismo de Dados, Automação e Data Storytelling no Insper, desenvolvendo assim competências
+                em análise, visualização e narrativa de dados, além de programação.</p>
+
+            <p> Antes de ingressar no Insper, foi redator sênior na Loures Consultoria, uma renomada agência de
+                comunicação corporativa, onde coordenou e produziu diversas peças de comunicação interna para a
+                Johnson&Johnson, uma das maiores empresas de saúde do mundo. Nesse período, elaborou conteúdos de
+                endomarketing envolvendo as marcas da J&J, criando pautas para a newsletter especial para todos os
+                colaboradores da empresa. Também tem passagens pelo Olhar Digital e Grupo Bandeirantes de Comunicação.
+            </p>
+
+            <p> É um jornalista apaixonado pelo trabalho e busca sempre se atualizar e aprender novas ferramentas
+                e técnicas para produzir conteúdos relevantes, criativos e de qualidade. Tem experiência em hardnews,
+                comunicação institucional, produção em coberturas especiais, comunicação interna e produção de conteúdo
+                web. Além disso, tem certificação de proficiência em inglês e conhecimentos em italiano.</p>
+        </swiper-slide>
+
+    </swiper-container>
+
+    <form onsubmit="busca(input.value); return false;"
+        style="position: absolute; bottom: 10px; left: 10px; z-index: 1000;">
+        <input type="search" id="input" placeholder="Busque uma cidade" />
+        <button>Buscar</button>
+    </form>
+
+</body>
+
+</html>
