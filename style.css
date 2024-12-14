@@ -1,32 +1,5 @@
-/* Estilos para dispositivos móveis */
-@media (max-width: 768px) {
-    body {
-        flex-direction: column;
-        overflow: auto;
-    }
-
-    swiper-container {
-        width: 100vw;
-        height: 100vh; /* Reduz altura para caber no celular */
-    }
-
-    .capa-title {
-        font-size: 2rem; /* Reduz tamanho da fonte no título */
-    }
-
-    .capa-subtitle {
-        font-size: 1.2rem; /* Reduz subtítulo */
-    }
-
-    .capa-button {
-        font-size: 0.9rem;
-        padding: 8px 16px;
-    }
-}
-
-
 :root {
-    --swiper-navigation-sides-offset: 10px; /* Próximo à borda direita/esquerda */
+    --swiper-navigation-sides-offset: 200px; /* Próximo à borda direita/esquerda */
     --swiper-navigation-top-offset: calc(100% - 50px); /* Próximo ao rodapé */
     --swiper-navigation-color: #ff0000; /* Cor das setas */
     --swiper-navigation-size: 5px; /* Tamanho das setas */
@@ -46,7 +19,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg, #2c3e50, #4ca1af);
+    background: linear-gradient(135deg, #00682a, #ff0000);
     color: #fff;
     text-align: center;
     z-index: 9999;
@@ -62,13 +35,18 @@
 
 .capa-content {
     max-width: 600px;
+    text-align: center;
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
 }
 
 .capa-title {
-    font-size: 3rem;
+    font-size: 2.8rem;
     margin: 0;
-    white-space: nowrap;
     font-family: 'Georgia', serif;
+    color: white
 }
 
 .capa-subtitle {
@@ -76,6 +54,7 @@
     margin: 20px 0;
     white-space: nowrap;
     font-family: 'Georgia', serif;
+    color: white
 }
 
 .capa-button {
@@ -89,15 +68,57 @@
     transition: background-color 0.3s;
 }
 
-.capa-button:hover {
+#input {
+    font-size: 0.9rem;
+    padding: 4px;
+    border: 1px solid #ddd; 
+    border-radius: 5px;
+    outline: none; 
+    margin-right: 2px; 
+    transition: border-color 0.3s; 
+}
+
+#input:focus {
+    border-color: #007BFF; 
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); 
+}
+
+.pesquisa-button{
+    font-size: 0.9rem;
+    padding: 4px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.pesquisa-button:hover {
     background-color: #0056b3;
 }
 
+
+.capa-button:hover {
+    background-color: #0056b3;
+}
 
 body {
     display: flex;
     margin: 0;
     overflow: hidden;
+
+}
+
+.highlight {
+    background-color: #00682a;
+    color: white;
+
+}
+
+.highlightnao {
+    background-color: #cfcfcf;
+    color: black;
 }
 
 swiper-container {
@@ -171,7 +192,7 @@ a:hover {
     height: 100vh;
     width: 50vw;
     transition: opacity 0.5s;
-    background-color: white;
+    background-color: #f5f5f5;
 }
 
 #joao {
