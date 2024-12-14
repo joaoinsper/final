@@ -35,10 +35,10 @@
     <swiper-container navigation>
         <swiper-slide data-tela="brasil">
             <h1>Apenas 33% dos municípios brasileiros aplicaram o Enem 2023</h1>
-            <p>O Exame Nacional do Ensino Médio (Enem) 2023 foi aplicado em apenas 33% dos municípios brasileiros,
+            <p>O Exame Nacional do Ensino Médio (Enem) 2023 <span class="highlight">foi aplicado</span> em apenas 33% dos municípios brasileiros,
                 de
                 acordo com dados divulgados pelo Ministério da Educação. Dos 5.572 municípios do país, apenas 1.885
-                realizaram as provas, enquanto 3.687 cidades não tiveram aplicação do exame.</p>
+                realizaram as provas, enquanto 3.687 cidades <span class="highlightnao">não tiveram aplicação do exame.</span></p>
             <p>Apesar de o número de inscritos no Enem ter alcançado 3.933.955 participantes em 2023, a concentração
                 das provas em um terço das cidades brasileiras reflete os desafios logísticos e a distribuição
                 desigual
@@ -60,7 +60,7 @@
             </h1>
             <p>Ao aproximar o olhar sobre a região Nordeste, destaca-se uma diferença significativa entre os estados
                 vizinhos Ceará e Piauí na aplicação do Enem 2023 e no desempenho médio dos estudantes.</p>
-            <p>O Ceará, com 184 municípios, aplicou a prova em 65% deles (120 cidades). Em contraste, o Piauí, que
+            <p>O Ceará, com 184 municípios, <span class="highlight">aplicou a prova</span> 65% deles (120 cidades). Em contraste, o Piauí, que
                 conta
                 com 224 municípios, teve a aplicação do exame em apenas 15% (34 cidades). Essa diferença já
                 evidencia um
@@ -189,7 +189,7 @@
     <form onsubmit="busca(input.value); return false;"
         style="position: absolute; bottom: 10px; left: 10px; z-index: 1000;">
         <input type="search" id="input" placeholder="Busque uma cidade" />
-        <button>Buscar</button>
+        <button class="pesquisa-button" id="pesquisa-button">Buscar</button>
     </form>
 
 </body>
